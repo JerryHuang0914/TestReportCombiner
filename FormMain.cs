@@ -9,7 +9,6 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using dev.jerry_h.pc_tools.CommonLibrary;
 
 namespace com.usi.shd1_tools.TestReportCombiner
 {
@@ -46,6 +45,7 @@ namespace com.usi.shd1_tools.TestReportCombiner
         private List<String> warning_msg = new List<string>();
         private double progress = 0.0;
         private Timer tmr_ProgerssBar;
+        private bool auto_import = true;
 
         private String CHMFile = System.AppDomain.CurrentDomain.BaseDirectory + "TestReportCombinerUserManual.chm";
 
@@ -59,13 +59,16 @@ namespace com.usi.shd1_tools.TestReportCombiner
         private void openOthersReport_byFolder(String folder)
         {
             lstOthersReport.Clear();
-            DirectoryInfo directory = new DirectoryInfo(folder);
-            FileInfo[] files = directory.GetFiles();
-            var filtered = from f in files
-                           where !f.Attributes.HasFlag(FileAttributes.Hidden)&& !f.Name.Contains("COMBINED") && (f.Extension.Equals(".xlsx") || f.Extension.Equals(".xls"))
-                           select f.FullName;
-            lstOthersReport.AddRange(filtered);
-            lstOthersReport.Remove(strBaseReport);
+            if (auto_import)
+            {
+                DirectoryInfo directory = new DirectoryInfo(folder);
+                FileInfo[] files = directory.GetFiles();
+                var filtered = from f in files
+                               where !f.Attributes.HasFlag(FileAttributes.Hidden) && !f.Name.Contains("COMBINED") && (f.Extension.Equals(".xlsx") || f.Extension.Equals(".xls"))
+                               select f.FullName;
+                lstOthersReport.AddRange(filtered);
+                lstOthersReport.Remove(strBaseReport);
+            }
             refresh_ListView_OthersReport();
         }
 
@@ -92,6 +95,17 @@ namespace com.usi.shd1_tools.TestReportCombiner
                             Other_Columns.Add(xeOthers.Value);
                         }
                     }
+                    try
+                    {
+                        XElement xeUI_settings = xeConfig.Element("ui_settins");
+                        XElement xeAutoImport = xeUI_settings.Element("auto_import_others_report");
+                        auto_import = Convert.ToBoolean(xeAutoImport.Value);
+                        ckbAutoImport.Checked = auto_import;
+                    }
+                    catch
+                    {
+
+                    }
                 }
             }
             catch
@@ -110,6 +124,8 @@ namespace com.usi.shd1_tools.TestReportCombiner
             XElement xeDocumentColumn = new XElement("document_column");
             XElement xeResultColumn = new XElement("result_column");
             XElement xeOtherColumns = new XElement("other_columns");
+            XElement xeUI_settings = new XElement("ui_settins");
+            XElement xeAutoImport = new XElement("auto_import_others_report");
             xeSheetIndex.Value = SheetIndex.ToString();
             xeFirstRow.Value = FirstRow.ToString();
             xeIdColumn.Value = TCID_Column;
@@ -127,7 +143,10 @@ namespace com.usi.shd1_tools.TestReportCombiner
             xeExcel_settings.Add(xeDocumentColumn);
             xeExcel_settings.Add(xeResultColumn);
             xeExcel_settings.Add(xeOtherColumns);
+            xeAutoImport.Value = auto_import.ToString();
+            xeUI_settings.Add(xeAutoImport);
             xeConfig.Add(xeExcel_settings);
+            xeConfig.Add(xeUI_settings);
             xeConfig.Save(strConfigPath);
         }
 
@@ -214,7 +233,7 @@ namespace com.usi.shd1_tools.TestReportCombiner
             {
                 txtBaseReport.Text = openFileDialog1.SafeFileName;
                 strBaseReport = openFileDialog1.FileName;
-                openOthersReport_byFolder(Path.GetDirectoryName(strBaseReport));
+                openOthersReport_byFolder(Path.GetDirectoryName(strBaseReport));                
                 openBaseReport();
             }
         }
@@ -421,6 +440,12 @@ namespace com.usi.shd1_tools.TestReportCombiner
         private void tsmiHelp_Click(object sender, EventArgs e)
         {
             Help.ShowHelp(this, CHMFile, HelpNavigator.Topic);
+        }
+
+        private void ckbAutoImport_CheckedChanged(object sender, EventArgs e)
+        {
+            auto_import = ckbAutoImport.Checked;
+            updateConfig();
         }
     }
 }

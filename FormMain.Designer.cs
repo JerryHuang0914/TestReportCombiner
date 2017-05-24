@@ -33,6 +33,9 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.tsmiHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiExcelSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.lsvReports = new System.Windows.Forms.ListView();
             this.chName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chControl = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -64,9 +67,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.tsmiHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiExcelSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.ckbAutoImport = new System.Windows.Forms.CheckBox();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -129,6 +130,32 @@
             this.menuStrip1.Size = new System.Drawing.Size(853, 24);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // tsmiHelp
+            // 
+            this.tsmiHelp.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsmiHelp.Image = global::com.usi.shd1_tools.TestReportCombiner.Properties.Resources.help_16;
+            this.tsmiHelp.Name = "tsmiHelp";
+            this.tsmiHelp.Size = new System.Drawing.Size(63, 20);
+            this.tsmiHelp.Text = "Help";
+            this.tsmiHelp.Click += new System.EventHandler(this.tsmiHelp_Click);
+            // 
+            // tsmiSettings
+            // 
+            this.tsmiSettings.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsmiSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiExcelSettings});
+            this.tsmiSettings.Image = global::com.usi.shd1_tools.TestReportCombiner.Properties.Resources.settings_16;
+            this.tsmiSettings.Name = "tsmiSettings";
+            this.tsmiSettings.Size = new System.Drawing.Size(81, 20);
+            this.tsmiSettings.Text = "Settings";
+            // 
+            // tsmiExcelSettings
+            // 
+            this.tsmiExcelSettings.Name = "tsmiExcelSettings";
+            this.tsmiExcelSettings.Size = new System.Drawing.Size(153, 22);
+            this.tsmiExcelSettings.Text = "Excel Settings";
+            this.tsmiExcelSettings.Click += new System.EventHandler(this.excelColumnsToolStripMenuItem_Click);
             // 
             // lsvReports
             // 
@@ -381,6 +408,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.ckbAutoImport);
             this.panel3.Controls.Add(this.label2);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel3.Location = new System.Drawing.Point(0, 0);
@@ -443,31 +471,18 @@
             this.panel5.Size = new System.Drawing.Size(166, 42);
             this.panel5.TabIndex = 4;
             // 
-            // tsmiHelp
+            // ckbAutoImport
             // 
-            this.tsmiHelp.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsmiHelp.Image = global::com.usi.shd1_tools.TestReportCombiner.Properties.Resources.help_16;
-            this.tsmiHelp.Name = "tsmiHelp";
-            this.tsmiHelp.Size = new System.Drawing.Size(63, 20);
-            this.tsmiHelp.Text = "Help";
-            this.tsmiHelp.Click += new System.EventHandler(this.tsmiHelp_Click);
-            // 
-            // tsmiSettings
-            // 
-            this.tsmiSettings.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsmiSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiExcelSettings});
-            this.tsmiSettings.Image = global::com.usi.shd1_tools.TestReportCombiner.Properties.Resources.settings_16;
-            this.tsmiSettings.Name = "tsmiSettings";
-            this.tsmiSettings.Size = new System.Drawing.Size(81, 20);
-            this.tsmiSettings.Text = "Settings";
-            // 
-            // tsmiExcelSettings
-            // 
-            this.tsmiExcelSettings.Name = "tsmiExcelSettings";
-            this.tsmiExcelSettings.Size = new System.Drawing.Size(153, 22);
-            this.tsmiExcelSettings.Text = "Excel Settings";
-            this.tsmiExcelSettings.Click += new System.EventHandler(this.excelColumnsToolStripMenuItem_Click);
+            this.ckbAutoImport.AutoSize = true;
+            this.ckbAutoImport.Checked = true;
+            this.ckbAutoImport.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbAutoImport.Location = new System.Drawing.Point(13, 29);
+            this.ckbAutoImport.Name = "ckbAutoImport";
+            this.ckbAutoImport.Size = new System.Drawing.Size(104, 23);
+            this.ckbAutoImport.TabIndex = 12;
+            this.ckbAutoImport.Text = "Auto import";
+            this.ckbAutoImport.UseVisualStyleBackColor = true;
+            this.ckbAutoImport.CheckedChanged += new System.EventHandler(this.ckbAutoImport_CheckedChanged);
             // 
             // FormMain
             // 
@@ -552,6 +567,7 @@
         private System.Windows.Forms.TextBox txtOthersCount;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ToolStripMenuItem tsmiHelp;
+        private System.Windows.Forms.CheckBox ckbAutoImport;
     }
 }
 

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <excel_settins>
+    <sheet_index>1</sheet_index>
+    <first_row>2</first_row>
+    <id_column>B</id_column>
+    <document_column>Q</document_column>
+    <result_column>O</result_column>
+    <other_columns>
+      <other_column>P</other_column>
+    </other_columns>
+  </excel_settins>
+</config>
